@@ -6,24 +6,37 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 const CartButton = () => {
   const navigation = useNavigation();
-  //   const items = useSelector((state) => state.cartReducer.items);
-  //   const totalQuantity = items.forEach((item) => {
-  //     let total = item.quantity;
-  //     console.log(total);
-  //   });
+  let total = 0;
+  const items = useSelector((state) => state.cartReducer.items);
+  const totalQuantity = items.forEach((item) => {
+    total = total + item.quantity;
+    return total;
+  });
+
   return (
-    <View>
+    <View style={styles.all}>
       <Feather
         name="shopping-cart"
         size={24}
         color="black"
         onPress={() => navigation.navigate(CART)}
       />
-      {/* <Text>Total{totalQuantity}</Text> */}
+      <Text style={styles.number}>{total}</Text>
     </View>
   );
 };
 
 export default CartButton;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  number: {
+    fontSize: 10,
+    color: "black",
+    backgroundColor: "white",
+
+    textAlign: "center",
+  },
+  all: {
+    marginRight: 10,
+  },
+});

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../store/actions/cartActions";
 const ProductItem = ({ product }) => {
   const items = useSelector((state) => state.cartReducer.items);
-  // console.log(items);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
 

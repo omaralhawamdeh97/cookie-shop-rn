@@ -1,15 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { deleteItemFromCart } from "../../store/actions/cartActions";
 
 const CartItem = (props) => {
-  //   console.log(props.item, "zzz");
-  //   console.log(item.name, "name");
+  const dispatch = useDispatch();
   return (
     <View>
       <Text>Name : {props.item.name}</Text>
       <Text>Price : {props.item.price}</Text>
       <Text>Quantity : {props.item.quantity}</Text>
       <Text>Total price : {props.item.price * props.item.quantity}</Text>
+      <Button
+        title="Delete"
+        onPress={() => dispatch(deleteItemFromCart(props.item.id))}
+      />
     </View>
   );
 };

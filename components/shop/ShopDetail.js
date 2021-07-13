@@ -1,45 +1,35 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import {
-  Spinner,
-  HStack,
-  Heading,
-  Center,
-  NativeBaseProvider,
-} from "native-base";
-import ProductList from "../products/ProductItem";
+import { Center, Box, List } from "native-base";
 import ProductItem from "../products/ProductItem";
 import CartButton from "../buttons/CartButton";
+import Spinner from "../Spinner";
 
 const ShopDetail = ({ route, navigation }) => {
   const { shop } = route.params;
   const loadingShops = useSelector((state) => state.shopReducer.loading);
   const shops = useSelector((state) => state.shopReducer.shops);
 
-  if (loadingShops)
-    return (
-      <NativeBaseProvider>
-        <HStack space={2}>
-          <Heading color="primary.800">Loading</Heading>
-          <Spinner accessibilityLabel="Loading posts" />
-        </HStack>
-        <Center flex={1}></Center>
-      </NativeBaseProvider>
-    );
+  if (loadingShops) return <Spinner />;
 
   return (
-    <View>
-      <Text>{shop.name}</Text>
-      <Image source={{ uri: shop.image }} style={{ width: 200, height: 200 }} />
-      <Text>Products :</Text>
-
-      {/* <ProductList products={shop.products} /> */}
-      {shop.products.map((product) => (
-        <ProductItem product={product} key={product.id} />
-      ))}
-      <CartButton />
-    </View>
+    <Center flex={1}>
+      <Box w="95%">
+        <Text>{shop.name}</Text>
+        <Image
+          source={{ uri: shop.image }}
+          style={{ width: 200, height: 200 }}
+        />
+        <Text>Products :</Text>
+        <CartButton />
+        <List space={2} my={2}>
+          {shop.products.map((product) => (
+            <ProductItem product={product} key={product.id} />
+          ))}
+        </List>
+      </Box>
+    </Center>
   );
 };
 
